@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,6 +22,18 @@ namespace TP03GestionTournois.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Tournois.ToListAsync());
+        }
+
+        // GET: Search Tournoi By text
+        public async Task<IActionResult> Search(string searching)
+        {
+          return View(await _context.Tournois.Where(t => t.Jeu.Contains(searching) ||
+                                                         t.Nom.Contains(searching) ||
+                                                         t.Date.Contains(searching) ||
+                                                         t.Prix.ToString().Contains(searching) ||
+                                                         t.Theme.Contains(searching) ||
+                                                         t.Description.Contains(searching) ||
+                                                         searching==null).ToListAsync());
         }
 
         // GET: Tournoi/Details/5
